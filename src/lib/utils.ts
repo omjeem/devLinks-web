@@ -50,7 +50,7 @@ export const platformRegexMap: Record<string, RegExp> = {
   [MEDIA_PLATEFORM.Youtube]: /^https:\/\/(www\.)?youtube\.com\/(channel|c|user)\/[A-Za-z0-9_-]+\/?$/,
   [MEDIA_PLATEFORM.Linkedin]: /^https:\/\/(www\.)?linkedin\.com\/in\/[A-Za-z0-9_-]+\/?$/,
   [MEDIA_PLATEFORM.Facebook]: /^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9_.-]+\/?$/,
-  [MEDIA_PLATEFORM.Twitter]: /^https:\/\/(www\.)?twitter\.com\/[A-Za-z0-9_]+\/?$/,
+  [MEDIA_PLATEFORM.Twitter]: /^https:\/\/(www\.)?x\.com\/[A-Za-z0-9_]+\/?$/,
   [MEDIA_PLATEFORM.Instagram]: /^https:\/\/(www\.)?instagram\.com\/[A-Za-z0-9_.]+\/?$/,
 };
 

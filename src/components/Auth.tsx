@@ -9,7 +9,19 @@ export enum PageType {
     LINKS = "LINKS"
 }
 
-export default function AuthPage({ pageType, setPageType }: { pageType: PageType, setPageType: (type: PageType) => void }) {
+export default function AuthPage({
+    pageType,
+    setPageType,
+    isLoggedIn,
+    setIsLoggedIn
+}:
+    {
+        pageType: PageType,
+        setPageType: (type: PageType) => void,
+        isLoggedIn: boolean,
+        setIsLoggedIn: any
+    }
+) {
     const [form, setForm] = useState({
         name: "",
         userName: "",
@@ -23,14 +35,14 @@ export default function AuthPage({ pageType, setPageType }: { pageType: PageType
     const [token, setToken] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [loginMethod, setLoginMethod] = useState("email"); // "email", "otp", "google"
+    const [loginMethod, setLoginMethod] = useState("email");
 
     const handleInputChange = (field: string, value: string) => {
         setForm(prev => ({
             ...prev,
             [field]: value
         }));
-        setError(""); // Clear error on input change
+        setError("");
     };
 
     const validateForm = () => {
@@ -135,13 +147,13 @@ export default function AuthPage({ pageType, setPageType }: { pageType: PageType
                 setToken(responseData.data);
                 setOtpStep(true);
             } else {
-                alert("here")
                 console.log("Responsedata is ", responseData)
                 localStorage.setItem('user', JSON.stringify(responseData.data));
                 setPageType(PageType.LINKS);
+                setIsLoggedIn(true)
             }
             setError("");
-        } catch (err : any) {
+        } catch (err: any) {
             const message = err?.response?.data?.error || "Network error occurred"
             setError(message);
         } finally {
@@ -181,6 +193,7 @@ export default function AuthPage({ pageType, setPageType }: { pageType: PageType
 
             localStorage.setItem('user', JSON.stringify(data.data));
             setPageType(PageType.LINKS);
+            setIsLoggedIn(true)
             setError("");
 
         } catch (err: any) {
@@ -216,9 +229,10 @@ export default function AuthPage({ pageType, setPageType }: { pageType: PageType
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">
                         Verify Your Email
                     </h1>
-                    <p className="text-gray-500">
-                        We've sent a verification code to {form.email}. Please enter it below.
-                    </p>
+                    <div className="text-sm text-gray-700">
+                        We've sent a verification code to <strong>{form.email}</strong>. Please enter it below. If you don't see it, please check your spam or junk folder.
+                    </div>
+
                 </div>
 
                 {error && (
@@ -346,11 +360,14 @@ export default function AuthPage({ pageType, setPageType }: { pageType: PageType
                             <input
                                 type="text"
                                 value={form.userName}
-                                onChange={(e) => handleInputChange("userName", e.target.value)}
+                                onChange={(e) =>
+                                    handleInputChange("userName", e.target.value.replace(/\s+/g, '-'))
+                                }
                                 placeholder="Choose a unique username"
                                 className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent text-sm"
                             />
                         </div>
+
                     </>
                 )}
 

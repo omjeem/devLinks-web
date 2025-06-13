@@ -30,6 +30,8 @@ export default function Home() {
   const [links, setLinks] = useState<Link[]>([]);
   const [pageType, setPageType] = useState<PageType>(PageType.SIGNUP)
   const [isPreview, setIsPreview] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+
 
 
   const sensors = useSensors(
@@ -190,7 +192,14 @@ export default function Home() {
 
   return (
     <div className="h-screen bg-gray-50 flex flex-col">
-      <Header isPreview={isPreview} setIsPreview={setIsPreview} />
+      <Header
+        isPreview={isPreview}
+        setIsPreview={setIsPreview}
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        setPageType={setPageType}
+      />
+
       <div className="flex-1 w-full flex max-sm:flex-col-reverse gap-6 p-6 max-w-[98vw] sm:max-w-[80vw] mx-auto scroll-smooth">
         <div className={`${!isPreview ? 'basis-2/5' : 'w-full'} bg-white w-full grid place-items-center`}>
           <div className="sticky top-6" id="phone-preview">
@@ -221,7 +230,11 @@ export default function Home() {
                 </DndContext>
               ) : (
                 <div>
-                  <AuthPage pageType={pageType} setPageType={setPageType} />
+                  <AuthPage
+                    pageType={pageType}
+                    setPageType={setPageType}
+                    isLoggedIn={isLoggedIn}
+                    setIsLoggedIn={setIsLoggedIn} />
                 </div>
               )
             }
